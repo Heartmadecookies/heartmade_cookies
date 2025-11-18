@@ -69,29 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
     orderCart.innerHTML = "<p>Ваш кошик порожній 😢</p>";
   } else {
 
-    cart.forEach(item => {
-      const div = document.createElement("div");
-      div.classList.add("cart-item");
-
-      // Якщо товар — HeartBox
-      if (item.name === "HeartBox" && Array.isArray(item.items)) {
-
-        div.innerHTML = `
-          <h3>HeartBox (4 шт)</h3>
-          <p><strong>Склад:</strong> ${item.items.join(", ")}</p>
-          <p><strong>Ціна:</strong> ${item.price} грн × ${item.qty}</p>
-        `;
-
-      } else {
-        // Звичайне печиво
-        div.innerHTML = `
-          <h3>${item.name}</h3>
-          <p>${item.price} грн × ${item.qty}</p>
-        `;
-      }
-
-      orderCart.appendChild(div);
-      total += item.price * item.qty;
     });
 
     orderCart.innerHTML += `<h3>Загальна сума: ${total} грн</h3>`;
@@ -122,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
 
 
