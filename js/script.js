@@ -397,7 +397,7 @@ cart.push({
     name: "HeartBox",
     price: 220,
     img: "images/box.jpg",
-    cookies: selected,   // <-- Оце головне, твій масив selected!
+    items: selected,   // <-- Оце головне, твій масив selected!
     qty: 1               // <-- відповідно твоїй логіці qty
 });
     
@@ -457,6 +457,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
 
 
 
