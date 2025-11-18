@@ -64,52 +64,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let total = 0;
 
-  // Показуємо замовлення на сторінці
+  // Відображення складу замовлення
   if (cart.length === 0) {
     orderCart.innerHTML = "<p>Ваш кошик порожній 😢</p>";
   } else {
+
     cart.forEach(item => {
-  const div = document.createElement("div");
-  div.classList.add("cart-item");
+      const div = document.createElement("div");
+      div.classList.add("cart-item");
 
-  // Якщо HeartBox — показуємо склад з item.items
-  if (item.name === "HeartBox" && Array.isArray(item.items)) {
+      // Якщо товар — HeartBox
+      if (item.name === "HeartBox" && Array.isArray(item.items)) {
 
-    div.innerHTML = `
-      <h3>HeartBox (4 шт)</h3>
-      <p><strong>Склад:</strong> ${item.items.join(", ")}</p>
-      <p><strong>Ціна:</strong> ${item.price} грн × ${item.qty}</p>
-    `;
+        div.innerHTML = `
+          <h3>HeartBox (4 шт)</h3>
+          <p><strong>Склад:</strong> ${item.items.join(", ")}</p>
+          <p><strong>Ціна:</strong> ${item.price} грн × ${item.qty}</p>
+        `;
 
-  } else {
+      } else {
+        // Звичайне печиво
+        div.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>${item.price} грн × ${item.qty}</p>
+        `;
+      }
 
-    // Звичайне печиво
-    div.innerHTML = `
-      <h3>${item.name}</h3>
-      <p>${item.price} грн × ${item.qty}</p>
-    `;
-  }
-
-  orderCartContainer.appendChild(div);
-  total += item.price * item.qty;
-});
+      orderCart.appendChild(div);
+      total += item.price * item.qty;
+    });
 
     orderCart.innerHTML += `<h3>Загальна сума: ${total} грн</h3>`;
   }
 
-  // Перед відправкою форми — вписуємо склад
+  // Формування даних для листа
   document.getElementById("order-form").addEventListener("submit", () => {
 
     const formatted = cart.map(item => {
-      if (item.items) {
-        return `HeartBox: ${item.items.join(", ")}`;
+      if (item.name === "HeartBox" && Array.isArray(item.items)) {
+        return `HeartBox (4 шт): ${item.items.join(", ")}`;
       }
       return `${item.name} × ${item.qty} = ${item.qty * item.price} грн`;
     }).join("\n");
 
     cartField.value = `${formatted}\n\nЗагальна сума: ${total} грн`;
 
-    // очищаємо кошик після відправки
+    // Очищення після відправлення
     setTimeout(() => {
       localStorage.removeItem("cart");
       localStorage.removeItem("checkout_cart");
@@ -122,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
 
 
