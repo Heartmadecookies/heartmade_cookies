@@ -23,6 +23,8 @@
     <div id="order-cart"></div>
 
     <form action="https://formsubmit.co/ivan.fedoryshyn09@gmail.com" method="POST">
+       <input type="hidden" name="_subject" value="Нове замовлення з HeartMade Cookies!">
+  <input type="hidden" name="_captcha" value="false">
       <label>Ім’я:
         <input type="text" name="name" required>
       </label>
@@ -32,6 +34,7 @@
       <label>Адреса (якщо самовивіз, залиште порожнім)
         <input type="text" name="address" placeholder="Тільки в Надвірній">
       </label>
+      <input type="hidden" name="cart_data" id="cart-data">
       <button type="submit" class="btn">Підтвердити замовлення</button>
     </form>
     <p id="order-result"></p>
@@ -98,4 +101,5 @@
     });
   </script>
 </body>
+
 </html>
