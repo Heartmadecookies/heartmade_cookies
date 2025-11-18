@@ -7,104 +7,103 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>🍪 HeartMade Cookies</h1>
-    <nav>
-      <a href="index.html">Головна</a>
-      <a href="catalog.html">Каталог</a>
-      <a href="about.html">Про нас</a>
-      <a href="contact.html">Контакти</a>
-      <a href="cart.html">🛒 Кошик</a>
-    </nav>
-  </header>
 
-  <section class="order-section">
-    <h2>Оформлення замовлення</h2>
-    <div id="order-cart"></div>
+<header>
+  <h1>🍪 HeartMade Cookies</h1>
+  <nav>
+    <a href="index.html">Головна</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="about.html">Про нас</a>
+    <a href="contact.html">Контакти</a>
+    <a href="cart.html">🛒 Кошик</a>
+  </nav>
+</header>
 
-    <form action="https://formsubmit.co/ivan.fedoryshyn09@gmail.com" method="POST">
-       <input type="hidden" name="_subject" value="Нове замовлення з HeartMade Cookies!">
-  <input type="hidden" name="_captcha" value="false">
-      <label>Ім’я:
-        <input type="text" name="name" required>
-      </label>
-      <label>Телефон:
-        <input type="tel" name="phone" placeholder="+380">
-      </label>
-      <label>Адреса (якщо самовивіз, залиште порожнім)
-        <input type="text" name="address" placeholder="Тільки в Надвірній">
-      </label>
-      <label>
-      <input type="hidden" name="cart_data" id="cart-data">
-      </label>
-      <button type="submit" class="btn">Підтвердити замовлення</button>
-    </form>
-    <p id="order-result"></p>
-  </section>
+<section class="order-section">
+  <h2>Оформлення замовлення</h2>
 
-  <footer>
-    <p>© 2025 HeartMade Cookies | З любов’ю зроблено вдома 💛</p>
-  </footer>
+  <div id="order-cart"></div>
 
-  <script src="js/script.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const orderCartContainer = document.getElementById("order-cart");
-      const cart = JSON.parse(localStorage.getItem("checkout_cart")) || [];
-      let total = 0;
+  <form id="order-form" action="https://formsubmit.co/ivan.fedoryshyn09@gmail.com" method="POST">
 
-      if (cart.length === 0) {
-        orderCartContainer.innerHTML = "<p>Ваш кошик порожній 😢</p>";
-      } else {
-        cart.forEach(item => {
-          const div = document.createElement("div");
-          div.classList.add("cart-item");
-          div.innerHTML = `
-            <h3>${item.name}</h3>
-            <p>${item.price} грн × ${item.qty}</p>
-          `;
-          orderCartContainer.appendChild(div);
-          total += item.price * item.qty;
-        });
-        const totalDiv = document.createElement("div");
-        totalDiv.innerHTML = `<strong>Загальна сума: ${total} грн</strong>`;
-        orderCartContainer.appendChild(totalDiv);
-      }
+    <input type="hidden" name="_subject" value="Нове замовлення з HeartMade Cookies!">
+    <input type="hidden" name="_captcha" value="false">
 
-      const orderForm = document.getElementById("order-form");
-      if (orderForm) {
-        orderForm.addEventListener("submit", e => {
-          e.preventDefault();
-          const data = new FormData(orderForm);
-          const name = data.get("name");
-          const phone = data.get("phone");
-          const address = data.get("address") || "Самовивіз";
+    <label>Ім’я:
+      <input type="text" name="name" required>
+    </label>
 
-          if (cart.length === 0) {
-            alert("Кошик порожній!");
-            return;
-          }
+    <label>Телефон:
+      <input type="tel" name="phone" placeholder="+380" required>
+    </label>
 
-          // Показати повідомлення про успіх
-          document.getElementById("order-result").innerHTML = `
-            <strong>Дякуємо, ${name}!</strong><br>
-            Ми отримали ваше замовлення на суму ${total} грн.<br>
-            Телефон: ${phone}<br>
-            Адреса: ${address}
-          `;
+    <label>Адреса (залиште порожнім для самовивозу):
+      <input type="text" name="address">
+    </label>
 
-          // Очистити кошик
-          localStorage.removeItem("checkout_cart");
-          localStorage.removeItem("cart");
-          renderCart(); // якщо повернутися на cart.html, кошик буде порожнім
-          orderForm.reset();
-        });
-      }
+    <!-- СЮДИ ЗАПИШЕТЬСЯ СКЛАД ЗАМОВЛЕННЯ -->
+    <input type="hidden" name="cart_data" id="cart-data">
+
+    <button type="submit" class="btn">Підтвердити замовлення</button>
+  </form>
+
+  <p id="order-result"></p>
+
+</section>
+
+<footer>
+  <p>© 2025 HeartMade Cookies | З любов’ю зроблено вдома 💛</p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const orderCartContainer = document.getElementById("order-cart");
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let total = 0;
+
+  if (cart.length === 0) {
+    orderCartContainer.innerHTML = "<p>Ваш кошик порожній 😢</p>";
+  } else {
+    cart.forEach(item => {
+      const div = document.createElement("div");
+      div.classList.add("cart-item");
+      div.innerHTML = `
+        <h3>${item.name}</h3>
+        <p>${item.price} грн × ${item.qty}</p>
+      `;
+      orderCartContainer.appendChild(div);
+      total += item.price * item.qty;
     });
-  </script>
-  <script src="js/script.js"></script>
+
+    const totalDiv = document.createElement("div");
+    totalDiv.innerHTML = `<strong>Загальна сума: ${total} грн</strong>`;
+    orderCartContainer.appendChild(totalDiv);
+  }
+
+  const form = document.getElementById("order-form");
+  const cartField = document.getElementById("cart-data");
+
+  form.addEventListener("submit", () => {
+
+    let list = cart.map(item => {
+      if (item.items) {
+        return `HeartBox (4 шт): ${item.items.join(", ")}`;
+      }
+      return `${item.name} × ${item.qty} = ${item.qty * item.price} грн`;
+    }).join("\n");
+
+    cartField.value = list + `\n\nЗагальна сума: ${total} грн`;
+
+    // Після успішного надсилання очищатиметься автоматично
+    setTimeout(() => {
+      localStorage.removeItem("cart");
+      localStorage.removeItem("checkout_cart");
+    }, 500);
+  });
+
+});
+</script>
+
 </body>
-
 </html>
-
-
