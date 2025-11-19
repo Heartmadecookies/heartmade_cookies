@@ -345,8 +345,11 @@ closeModal.addEventListener("click", () => {
   resetSelection();
 });
 
+
+
 function generateCookiesList() {
   modalList.innerHTML = "";
+  selected = {};
 
   const items = document.querySelectorAll(".catalog-item");
 
@@ -355,32 +358,65 @@ function generateCookiesList() {
     const imgSrc = item.querySelector("img").src;
 
     if (name !== "HeartBox (4 шт)") {
+
       const box = document.createElement("div");
       box.classList.add("modal-cookie");
 
       box.innerHTML = `
         <img src="${imgSrc}" alt="${name}">
         <p>${name}</p>
+        
+        <div class="hb-controls">
+          <button class="hb-minus" data-name="${name}">−</button>
+          <span class="hb-count" data-name="${name}">0</span>
+          <button class="hb-plus" data-name="${name}">+</button>
+        </div>
       `;
-
-      box.addEventListener("click", () => {
-        if (box.classList.contains("selected")) {
-          box.classList.remove("selected");
-          selected = selected.filter(n => n !== name);
-        } else {
-          if (selected.length < 4) {
-            box.classList.add("selected");
-            selected.push(name);
-          }
-        }
-        countText.innerText = selected.length;
-        confirmHB.disabled = selected.length !== 4;
-      });
 
       modalList.appendChild(box);
     }
   });
+
+  // кнопки "+"
+  modalList.querySelectorAll(".hb-plus").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const name = btn.dataset.name;
+
+      const currentTotal = Object.values(selected).reduce((a,b)=>a+b,0);
+      if (currentTotal >= 4) return; // максимум 4
+
+      selected[name] = (selected[name] || 0) + 1;
+
+      updateCounts();
+    });
+  });
+
+  // кнопки "-"
+  modalList.querySelectorAll(".hb-minus").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const name = btn.dataset.name;
+
+      if (!selected[name]) return;
+
+      selected[name]--;
+      if (selected[name] <= 0) delete selected[name];
+
+      updateCounts();
+    });
+  });
+
+  function updateCounts() {
+    modalList.querySelectorAll(".hb-count").forEach(span => {
+      const name = span.dataset.name;
+      span.innerText = selected[name] || 0;
+    });
+
+    const total = Object.values(selected).reduce((a,b)=>a+b,0);
+    countText.innerText = total;
+    confirmHB.disabled = total !== 4;
+  }
 }
+
 
 
 
@@ -388,29 +424,41 @@ function resetSelection() {
   selected = [];
   countText.innerText = 0;
   confirmHB.disabled = true;
+
+  document.querySelectorAll(".modal-cookie").forEach(x => {
+    x.classList.remove("selected");
+    x.dataset.count = 0;
+    x.removeAttribute("data-count");
+  });
 }
 
 confirmHB.addEventListener("click", () => {
+
+  // Перетворюємо selected в масив типу:
+  // ["Орео", "Орео", "Класичне", "Карамельне"]
+  const itemsArray = [];
+  Object.entries(selected).forEach(([name, qty]) => {
+    for (let i = 0; i < qty; i++) {
+      itemsArray.push(name);
+    }
+  });
+
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-cart.push({
-    name: "HeartBox",
-    price: 220,
-    img: "images/box.jpg",
-    items: selected,   // <-- Оце головне, твій масив selected!
-    qty: 1               // <-- відповідно твоїй логіці qty
-});
-    
- 
-
-  
+  cart.push({
+      name: "HeartBox",
+      price: 220,
+      img: "images/box.jpg",
+      items: itemsArray,     // ← ТЕПЕР ЦЕ МАСИВ!
+      qty: 1
+  });
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
   alert("HeartBox додано у кошик! ❤️");
 
   modal.style.display = "none";
-  resetSelection();
+  selected = {};
 });
 
 
