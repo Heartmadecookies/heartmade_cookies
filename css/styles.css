@@ -564,6 +564,8 @@ button:hover {
   border: 2px solid transparent;
   cursor: pointer;
   transition: 0.2s;
+  position: relative;
+  cursor: pointer;
 }
 
 .modal-cookie img {
@@ -578,6 +580,25 @@ button:hover {
 .modal-cookie.selected {
   border-color: #ff9800;
   background: #ffe4c4;
+}
+
+
+
+.modal-cookie.selected::after {
+  content: attr(data-count);
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #e08a57;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .confirm-btn {
