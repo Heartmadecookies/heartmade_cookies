@@ -680,3 +680,79 @@ button:hover, .add-to-cart:hover, .heartbox-btn:hover {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+
+.orders-section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.orders-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #b85a4a;
+}
+
+.order-card {
+  background: #fffdfb;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+  border-left: 6px solid #b85a4a;
+  transition: 0.3s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+}
+
+.order-card h3 {
+  margin: 0 0 10px;
+  color: #b85a4a;
+}
+
+.order-card p {
+  margin: 4px 0;
+  font-size: 15px;
+}
+
+.order-products {
+  margin-top: 10px;
+  padding-left: 15px;
+  border-left: 3px dashed #e5b8a4;
+}
+
+.order-products p {
+  font-size: 14px;
+  margin: 3px 0;
+}
+
+.order-total {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #a34f40;
+}
+
+.order-date {
+  font-size: 13px;
+  color: #777;
+  margin-top: 5px;
+}
+
+.clear-orders-btn {
+  display: block;
+  margin: 30px auto 0;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background-color: #b85a4a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.clear-orders-btn:hover {
+  background-color: #a34f40;
+}
