@@ -1090,3 +1090,39 @@ body {
     padding: 6px 10px;
   }
 }
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* відстань між лого та текстом */
+}
+
+.logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+/* Адаптація для телефону */
+@media (max-width: 768px) {
+  .logo-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+}
+
+.logo-area {
+  margin-right: auto;
+}
+
