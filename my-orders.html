@@ -7,13 +7,22 @@
 </head>
 <body>
 
-<header>
-  <h1>🍪 HeartMade Cookies</h1>
-  <nav>
-    <a href="index.html">Головна</a>
-    <a href="catalog.html">Каталог</a>
-    <a href="my-orders.html" class="active">Мої замовлення</a>
-  </nav>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">🍪 HeartMade</a>
+
+    <div class="dropdown">
+      <button class="dropbtn">Меню ▾</button>
+      <div class="dropdown-content">
+        <a href="index.html">🏠 Головна</a>
+        <a href="catalog.html">📦 Каталог</a>
+        <a href="about.html">ℹ️ Про нас</a>
+        <a href="contact.html">📞 Контакти</a>
+        <a href="cart.html">🛒 Кошик</a>
+        <a href="my-orders.html">📬 Мої замовлення</a>
+      </div>
+    </div>
+  </div>
 </header>
 
 <section class="orders-section">
@@ -69,3 +78,4 @@ document.addEventListener("DOMContentLoaded", () => {
 </body>
 
 </html>
+
