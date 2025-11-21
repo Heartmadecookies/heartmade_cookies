@@ -909,21 +909,25 @@ button:hover::after, .btn:hover::after {
   color: #2b1c3f;
 }
 
+/* ===== Ціни ===== */
 .price {
   color: #6a0dad;
   font-weight: bold;
 }
 
+/* ===== Деталі ===== */
 .details-text {
   color: #3d215f;
 }
 
+/* ===== Футер ===== */
 footer {
   background: #2a0738;
   color: #ddd1ff;
   text-align: center;
 }
 
+/* ===== Поля вводу ===== */
 input, textarea {
   border: 1px solid #cbb6ff;
   background: #faf7ff;
@@ -965,15 +969,17 @@ body {
   box-sizing: border-box;
 }
 
+/* Сітка для каталогу */
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
 }
 
+/* Адаптація для телефону */
 @media (max-width: 768px) {
   .catalog-grid {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr; /* 1 колонка */
   }
 
   nav {
@@ -1076,12 +1082,16 @@ body {
   display: block;
 }
 
-@media (max-width: 600px) {
-  .site-header {
-    height: 50px;
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: row;  /* завжди ряд */
+    align-items: center;
   }
 
-  .logo {
+  .dropdown {
+    margin-left: auto;
+  }
+    .logo {
     font-size: 16px;
   }
 
@@ -1090,6 +1100,9 @@ body {
     padding: 6px 10px;
   }
 }
+
+
+
 
 .logo-area {
   display: flex;
@@ -1125,4 +1138,3 @@ body {
 .logo-area {
   margin-right: auto;
 }
-
